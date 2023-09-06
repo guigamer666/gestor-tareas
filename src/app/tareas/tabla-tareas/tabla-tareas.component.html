@@ -1,0 +1,38 @@
+<div class="table-responsive">
+  <!-- ... Código anterior ... -->
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Descripción</th>
+        <th scope="col">Tarea realizada</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tarea of tareas; let i = index" [class.realizada]="tarea.realizada"
+        [class.en_progreso]="tarea.en_progreso">
+        <td>{{ tarea.descripcion }}</td>
+        <td>{{ tarea.realizada ? 'Sí' : 'No' }}</td>
+        <td>{{ tarea.categoria }}</td>
+        <td>{{ tarea.fecha.toLocaleString() }}</td>
+        <td>
+          <div class="d-flex flex-column">
+            <button type="button" class="btn btn-danger mb-2" (click)="eliminarTarea(tarea)">
+              Eliminar Tarea
+            </button>
+            <button type="button" class="btn btn-info mb-2" (click)="editarTarea(tarea)">
+              Editar Tarea
+            </button>
+            <button type="button" class="btn btn-info mb-2" (click)="cambiarestadotarea(i)">Realizada</button>
+            <button type="button" class="btn btn-primary mb-2 " (click)="cambiarestadotareaProgreso(i)">Tarea en
+              progreso/Completar Tarea</button>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

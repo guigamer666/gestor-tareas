@@ -1,0 +1,12 @@
+.realizada {
+  background-color: lightsalmon;
+}
+.en_progreso {
+  background-color: bisque;
+}
+.boton {
+  display: flex;
+}
+.mt-4 {
+  margin-top: 0.5rem !important;
+}

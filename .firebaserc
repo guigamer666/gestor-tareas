@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tareas-66631": {
+      "hosting": {
+        "TareasVersion1.1": [
+          "tareas-66631"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tareas-66631"
+  }
+}

@@ -1,0 +1,24 @@
+<h1>Formulario Registro</h1>
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+      formControlName="email">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
+  </div>
+
+  <!-- Mensaje de notificación si el usuario ya está registrado -->
+  <div *ngIf="usuarioYaRegistrado" class="alert alert-danger" role="alert">
+    El usuario ya está registrado.
+  </div>
+
+  <!-- Mensaje de éxito si el registro se ha realizado correctamente -->
+  <div *ngIf="registroExitoso" class="alert alert-success" role="alert">
+    Registro exitoso. ¡Bienvenido/a!
+  </div>
+
+  <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
