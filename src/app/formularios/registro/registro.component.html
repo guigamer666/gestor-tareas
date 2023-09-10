@@ -1,24 +1,27 @@
-<h1>Formulario Registro</h1>
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-      formControlName="email">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
-  </div>
+<!-- Agrega la clase "animated" y la clase de animación deseada -->
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="bg-white p-4 rounded shadow animated fadeIn">
+    <h1 class="h2 mb-4 fw-normal text-center">Registrarse</h1>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label fs-5">Email</label>
+      <input type="email" class="form-control fs-5" id="exampleInputEmail1" aria-describedby="emailHelp"
+        formControlName="email">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label fs-5">Contraseña</label>
+      <input type="password" class="form-control fs-5" id="exampleInputPassword1" formControlName="password">
+    </div>
 
-  <!-- Mensaje de notificación si el usuario ya está registrado -->
-  <div *ngIf="usuarioYaRegistrado" class="alert alert-danger" role="alert">
-    El usuario ya está registrado.
-  </div>
+    <!-- Mensaje de notificación si el usuario ya está registrado -->
+    <div *ngIf="usuarioYaRegistrado" class="alert alert-danger fs-5" role="alert">
+      El usuario ya está registrado.
+    </div>
 
-  <!-- Mensaje de éxito si el registro se ha realizado correctamente -->
-  <div *ngIf="registroExitoso" class="alert alert-success" role="alert">
-    Registro exitoso. ¡Bienvenido/a!
-  </div>
+    <!-- Mensaje de éxito si el registro se ha realizado correctamente -->
+    <div *ngIf="registroExitoso" class="alert alert-success fs-5" role="alert">
+      Registro exitoso. ¡Bienvenido/a!
+    </div>
 
-  <button type="submit" class="btn btn-primary">Registrar</button>
-</form>
+    <button type="submit" class="btn btn-primary fs-5">Registrar</button>
+  </form>
+</div>
