@@ -1,6 +1,8 @@
 # TareasVersion11
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+##Services used
+Firebase. For install firebase ng add  @angular/fire next execute the reason why it installs twice is because with the first command it does not install 100% there is an error and with this command it is solved. npm install firebase@latest @angular/fire@latest 
 
 ## Development server
 
