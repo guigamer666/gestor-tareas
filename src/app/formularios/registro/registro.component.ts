@@ -33,9 +33,12 @@ export class RegistroComponent implements OnInit {
       const password = this.formulario.value.password;
 
       this.userService.registrarUsuario({ email, password }).then(
+        //UserCredential es parte de firebase
         (response: UserCredential) => {
           // Manejar la respuesta del servicio
           console.log(response);
+          //Si se ha registrado correctamete el usuario establecemos esta variable en true
+          //y se redirige a la pagina de login
           this.registroExitoso = true;
           this.router.navigate(['/login']);
         },

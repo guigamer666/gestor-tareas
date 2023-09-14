@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
       const password = this.formulario.value.password;
 
       this.userService
+        //Si el email y password es correcto inicia sesion
         .login({ email, password })
         .then((response) => {
           // Inicio de sesión exitoso

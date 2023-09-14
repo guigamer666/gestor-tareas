@@ -21,18 +21,27 @@ import { Tareas } from '../interfaces/listaTareas.interface';
 })
 export class TareasService {
   constructor(private firestore: Firestore) {}
-
+  /**
+   * Obtiene las tareas de Firestore para un usuario específico.
+   * @param userUID El ID del usuario para el que se obtienen las tareas.
+   * @returns Un Observable que emite un array de objetos Tareas.
+   */
   getObtenerTarea(userUID: string): Observable<Tareas[]> {
+    // Definimos la colección 'tarea' en Firestore.
     const tareas = collection(this.firestore, 'tarea');
-    console.log(this.firestore);
+
+    // Realizamos una consulta para obtener las tareas ordenadas por fecha de creación descendente,
+    // filtradas por el 'userUID' proporcionado.
     const tareasQuery = query(
       tareas,
       orderBy('fecha', 'desc'),
       where('userUID', '==', userUID)
     );
+
+    // Obtenemos los datos de las tareas y mapeamos los resultados a objetos 'Tareas'.
     return collectionData(tareasQuery, { idField: 'id' }).pipe(
       map((data: DocumentData[]) => {
-        console.log('Tareas data:', data); // Agregar el console.log aquí
+        // Mapeamos los datos de Firestore a objetos 'Tareas'.
         return data.map((item: DocumentData) => {
           const tarea: Tareas = {
             id: item['id'] as string,
@@ -54,21 +63,39 @@ export class TareasService {
     return addDoc(tare, tarea);
   }
 
-  //INTENTO EXITOSO
+  /**
+   * Elimina una tarea existente en Firestore.
+   * @param tarea La tarea que se eliminará, incluyendo su ID.
+   */
   eliminarTarea(tarea: Tareas) {
+    // 1. Obtén la referencia al documento de la tarea que se va a eliminar.
     const tareaEliminar = doc(this.firestore, `tarea/${tarea.id}`);
-    const tareaId = doc(this.firestore, `tarea/${tarea.id}`).id;
-    console.log(tareaId);
+
+    // 2. Obtén la ID de la tarea para su registro y seguimiento.
+    const tareaId = tareaEliminar.id;
+    console.log('ID de la tarea a eliminar:', tareaId);
+
+    // 3. Elimina el documento de la tarea y maneja las promesas y errores.
     return deleteDoc(tareaEliminar)
-      .then((error) => {
-        console.log('eliminado correctamente');
+      .then(() => {
+        // La tarea se eliminó con éxito, registra un mensaje de éxito.
+        console.log('Tarea eliminada correctamente');
       })
       .catch((error) => {
+        // Se produjo un error al eliminar la tarea, registra un mensaje de error y detalles del error.
         console.error('Error al eliminar la tarea:', error);
       });
   }
+
+  /**
+   * Actualiza una tarea existente en Firestore.
+   * @param tarea La tarea que se actualizará, incluyendo su ID.
+   */
   actualizarTarea(tarea: Tareas) {
+    // 1. Obtén la referencia al documento de la tarea que se va a actualizar.
     const tareaDoc = doc(this.firestore, `tarea/${tarea.id}`);
+
+    // 2. Crea un objeto de datos de la tarea actualizada.
     const tareaData = {
       descripcion: tarea.descripcion,
       realizada: tarea.realizada,
@@ -76,11 +103,15 @@ export class TareasService {
       categoria: tarea.categoria,
       fecha: tarea.fecha,
     };
+
+    // 3. Actualiza el documento de la tarea con los nuevos datos y maneja las promesas y errores.
     return updateDoc(tareaDoc, tareaData)
       .then(() => {
+        // La tarea se actualizó con éxito, registra un mensaje de éxito.
         console.log('Tarea actualizada correctamente');
       })
       .catch((error) => {
+        // Se produjo un error al actualizar la tarea, registra un mensaje de error y detalles del error.
         console.error('Error al actualizar la tarea:', error);
       });
   }
