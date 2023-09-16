@@ -27,10 +27,10 @@ export class TareasService {
    * @returns Un Observable que emite un array de objetos Tareas.
    */
   getObtenerTarea(userUID: string): Observable<Tareas[]> {
-    // Definimos la colección 'tarea' en Firestore.
+    // Define la colección 'tarea' en Firestore.
     const tareas = collection(this.firestore, 'tarea');
 
-    // Realizamos una consulta para obtener las tareas ordenadas por fecha de creación descendente,
+    // Realiza una consulta para obtener las tareas ordenadas por fecha de creación descendente,
     // filtradas por el 'userUID' proporcionado.
     const tareasQuery = query(
       tareas,
@@ -38,23 +38,20 @@ export class TareasService {
       where('userUID', '==', userUID)
     );
 
-    // Obtenemos los datos de las tareas y mapeamos los resultados a objetos 'Tareas'.
+    // Obtiene los datos de las tareas y los transforma a objetos 'Tareas'.
     return collectionData(tareasQuery, { idField: 'id' }).pipe(
-      map((data: DocumentData[]) => {
-        // Mapeamos los datos de Firestore a objetos 'Tareas'.
-        return data.map((item: DocumentData) => {
-          const tarea: Tareas = {
-            id: item['id'] as string,
-            userUID: item['userUID'] as string,
-            descripcion: item['descripcion'] as string,
-            realizada: item['realizada'] as boolean,
-            en_progreso: item['en_progreso'] as boolean,
-            categoria: item['categoria'] as string,
-            fecha: new Date(),
-          };
-          return tarea;
-        });
-      })
+      // Mapea los datos de Firestore a objetos 'Tareas'.
+      map((data: DocumentData[]) =>
+        data.map((item: DocumentData) => ({
+          id: item['id'] as string,
+          userUID: item['userUID'] as string,
+          descripcion: item['descripcion'] as string,
+          realizada: item['realizada'] as boolean,
+          en_progreso: item['en_progreso'] as boolean,
+          categoria: item['categoria'] as string,
+          fecha: new Date(),
+        }))
+      )
     );
   }
 
