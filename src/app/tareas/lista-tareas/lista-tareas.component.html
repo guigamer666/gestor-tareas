@@ -1,5 +1,5 @@
-<div class="container">
-  <h1 class="text-center mt-4">Gestor de tareas</h1>
+<!-- <div class="container">
+  <h1 class="text-center mt-4 " data-aos="flip-down">Gestor de tareas</h1>
   <div class="row">
     <div class="col-md-6 mx-auto mt-4">
       <form (ngSubmit)="agregartarea()">
@@ -48,10 +48,102 @@
 
       </div>
     </div>
+    <div class="form-group">
+      <label for="fechaBusqueda">Buscar por Fecha:</label>
+      <input type="date" class="form-control" id="fechaBusqueda" name="fechaBusqueda" [(ngModel)]="fechaBusqueda">
+    </div>
+    <button type="button" class="btn btn-primary mt-3" (click)="buscarPorFecha()">Buscar por Fecha</button>
+
   </form>
 
   <app-tabla-tareas [tareas]="Tarea" [descripcionBuscada]="categoriaBuscada"
     (tareaEliminada)="eliminartarea($event)"></app-tabla-tareas>
+  <app-tabla-tareas [tareas]="tareasFiltradas" [descripcionBuscada]="categoriaBuscada"
+    (tareaEliminada)="eliminartarea($event)"></app-tabla-tareas>
+
+
+  <div class="text-center mt-4">
+    <button type="button" class="btn btn-danger" (click)="logOut()">Cerrar sesión</button>
+  </div>
+</div> -->
+<div class="container">
+  <h1 class="text-center mt-4 " data-aos="flip-down">Gestor de tareas</h1>
+  <div class="row">
+    <div class="col-md-6 mx-auto mt-4">
+      <form (ngSubmit)="agregartarea()">
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="descripcion"
+            placeholder="Inserte la descripcion de la tarea" name="descripcion" required>
+          <div class="text-danger" *ngIf="errorDescripcion">{{ errorDescripcion }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria">Categoría:</label>
+          <input type="text" class="form-control" id="categoria" name="categoria" [(ngModel)]="categoria"
+            name="categoria" required placeholder="Inserte la categoria de la tarea">
+          <div class="text-danger" *ngIf="errorCategoria">{{ errorCategoria }}</div>
+        </div>
+
+        <div class="form-group form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="flexCheckDefault"
+            [(ngModel)]="realizada">
+          <label class="form-check-label" for="flexCheckDefault">
+            Tarea Realizada
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha:</label>
+          <input type="datetime-local" class="form-control" id="fecha" name="fecha" [(ngModel)]="fecha" name="fecha"
+            required>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Agregar Tarea</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-6">
+        <input id="searchInput" class="form-control me-2 mt-4" type="search" name="buscar"
+          placeholder="Busca por categoria de la tarea" aria-label="Search" [(ngModel)]="categoriaBuscada"
+          (keyup)="buscarCategoria()">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-primary mt-3" (click)="toggleBusquedaPorFecha()">Buscar por Fecha</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarBusquedaPorFecha">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fechaBusqueda">Buscar por Fecha:</label>
+            <input type="date" class="form-control" id="fechaBusqueda" name="fechaBusqueda" [(ngModel)]="fechaBusqueda">
+          </div>
+          <button type="button" class="btn btn-primary mt-3" (click)="buscarPorFecha()">Buscar por Fecha</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-tabla-tareas [tareas]="Tarea" [descripcionBuscada]="categoriaBuscada" [tareas]="tareasFiltradas"
+    [descripcionBuscada]="categoriaBuscada" (tareaEliminada)="eliminartarea($event)"></app-tabla-tareas>
+  <!-- <app-tabla-tareas [tareas]="tareasFiltradas" [descripcionBuscada]="categoriaBuscada"
+    (tareaEliminada)="eliminartarea($event)"></app-tabla-tareas> -->
+  <!-- <app-tabla-tareas [tareas]="tareasFiltradas" [descripcionBuscada]="categoriaBuscada"
+    (tareaEliminada)="eliminartarea($event)"></app-tabla-tareas> -->
+
+
 
   <div class="text-center mt-4">
     <button type="button" class="btn btn-danger" (click)="logOut()">Cerrar sesión</button>

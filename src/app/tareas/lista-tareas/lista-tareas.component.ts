@@ -11,7 +11,9 @@ import { UserService } from 'src/app/services/user.service';
 export class ListaTareasComponent {
   Tarea: Tareas[] = [];
   // Nueva propiedad para almacenar las tareas filtradas
-
+  fechaBusqueda: string = '';
+  tareasFiltradas: Tareas[] = [];
+  mostrarBusquedaPorFecha: boolean = false;
   categoriaBuscada: string = '';
 
   id = '';
@@ -34,6 +36,37 @@ export class ListaTareasComponent {
   ngOnInit() {
     this.obtenerTareas();
   }
+  toggleBusquedaPorFecha() {
+    this.mostrarBusquedaPorFecha = !this.mostrarBusquedaPorFecha;
+  }
+
+  buscarPorFecha() {
+    if (this.fechaBusqueda) {
+      // Convierte la fecha de búsqueda a un objeto Date
+      const fecha = new Date(this.fechaBusqueda);
+
+      // Filtra las tareas que coinciden con la fecha seleccionada
+      const tareasFiltradas = this.Tarea.filter((tarea) => {
+        return tarea.fecha.toDateString() === fecha.toDateString();
+      });
+
+      if (tareasFiltradas.length > 0) {
+        // Actualiza el arreglo tareasFiltradas si hay tareas disponibles
+        this.tareasFiltradas.splice(
+          0,
+          this.tareasFiltradas.length,
+          ...tareasFiltradas
+        );
+      } else {
+        // Si no hay tareas disponibles, establece tareasFiltradas en un arreglo vacío
+        this.tareasFiltradas = [];
+      }
+    } else {
+      // Si no se ha seleccionado una fecha, muestra todas las tareas originales
+      this.tareasFiltradas.splice(0, this.tareasFiltradas.length);
+    }
+  }
+
   //Funcion que obtiene las tareas en base a la uid del usuario
   obtenerTareas() {
     const userUID = this.userService.getCurrentUserUID();
@@ -119,16 +152,46 @@ export class ListaTareasComponent {
     });
   }
 
+  // buscarCategoria() {
+  //   if (this.categoriaBuscada !== '') {
+  //     this.Tarea = this.Tarea.filter((tarea) =>
+  //       tarea.categoria
+  //         .toLowerCase()
+  //         .includes(this.categoriaBuscada.toLowerCase())
+  //     );
+  //   } else {
+  //     this.obtenerTareas(); // Si no hay búsqueda, recuperar todas las tareas originales
+  //   }
+  // }
   buscarCategoria() {
     if (this.categoriaBuscada !== '') {
-      this.Tarea = this.Tarea.filter((tarea) =>
-        tarea.categoria
-          .toLowerCase()
-          .includes(this.categoriaBuscada.toLowerCase())
-      );
+      const categoriaLowerCase = this.categoriaBuscada.toLowerCase();
+
+      // Filtra las tareas que coinciden con la categoría buscada
+      this.Tarea = this.Tarea.filter((tarea) => {
+        const tareaCategoria = tarea.categoria.toLowerCase();
+
+        // Verifica si la categoría de la tarea contiene la categoría buscada
+        return (
+          tareaCategoria.includes(categoriaLowerCase) ||
+          // Verifica si la categoría de la tarea contiene una corrección tipográfica
+          tareaCategoria.includes(
+            this.corregirErrorTipografico(categoriaLowerCase, tareaCategoria)
+          )
+        );
+      });
     } else {
       this.obtenerTareas(); // Si no hay búsqueda, recuperar todas las tareas originales
     }
+  }
+  corregirErrorTipografico(
+    categoriaBuscada: string,
+    categoriaTarea: string
+  ): string {
+    // Implementa tu lógica de corrección tipográfica aquí.
+    // Por ejemplo, puedes usar una biblioteca de corrección tipográfica o reglas personalizadas.
+    // Por ahora, simplemente devolveremos la cadena original.
+    return categoriaBuscada;
   }
 
   logOut() {
