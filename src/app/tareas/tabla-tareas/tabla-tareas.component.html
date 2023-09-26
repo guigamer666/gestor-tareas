@@ -36,3 +36,35 @@
     </tbody>
   </table>
 </div>
+<div *ngIf="tareaSeleccionada">
+  <h2 class="text-center mt-4">Editar Tarea</h2>
+  <form (ngSubmit)="actualizarTarea(tareaSeleccionada)">
+    <div class="form-group">
+      <label for="editDescripcion">Nueva Descripción:</label>
+      <input type="text" class="form-control" id="editDescripcion" name="editDescripcion"
+        [(ngModel)]="tareaSeleccionada.descripcion" placeholder="Inserte la nueva descripción" required>
+    </div>
+
+    <div class="form-group">
+      <label for="editCategoria">Nueva Categoría:</label>
+      <input type="text" class="form-control" id="editCategoria" name="editCategoria"
+        [(ngModel)]="tareaSeleccionada.categoria" placeholder="Inserte la nueva categoría" required>
+    </div>
+
+    <div class="form-group form-check">
+      <input class="form-check-input" type="checkbox" id="editRealizada" name="editRealizada"
+        [(ngModel)]="tareaSeleccionada.realizada">
+      <label class="form-check-label" for="editRealizada">
+        Tarea Realizada
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="editFecha">Nueva Fecha:</label>
+      <input type="datetime-local" class="form-control" id="editFecha" name="editFecha"
+        [(ngModel)]="tareaSeleccionada.fecha" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+  </form>
+</div>
