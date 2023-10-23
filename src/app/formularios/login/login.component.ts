@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
+//Esto es un comentario
 export class LoginComponent implements OnInit {
   formulario: FormGroup;
   loginError: boolean = false;
