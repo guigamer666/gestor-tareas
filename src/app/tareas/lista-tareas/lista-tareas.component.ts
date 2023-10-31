@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Tareas } from 'src/app/interfaces/listaTareas.interface';
 import { TareasService } from 'src/app/services/tareas.service';
 import { UserService } from 'src/app/services/user.service';
+import { Firestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-lista-tareas',
   templateUrl: './lista-tareas.component.html',
@@ -135,21 +136,33 @@ export class ListaTareasComponent {
   actual de this.Tarea[posicion].realizada. */
   cambiarestadotarea(posicion: number) {
     this.Tarea[posicion].realizada = !this.Tarea[posicion].realizada;
-    this.actualizarTarea(this.Tarea[posicion]);
+    //this.actualizarTarea(this.Tarea[posicion]);
   }
   cambiarestadotareaCompletada(posicion: number) {
     this.Tarea[posicion].en_progreso = !this.Tarea[posicion].en_progreso;
-    this.actualizarTarea(this.Tarea[posicion]);
+    //this.actualizarTarea(this.Tarea[posicion]);
   }
   editarTarea(tarea: Tareas) {
     this.tareaSeleccionada = { ...tarea };
   }
 
+  // actualizarTarea(tarea: Tareas) {
+  //   this.tareasService.actualizarTarea(tarea).then(() => {
+  //     this.obtenerTareas(); // Actualizar la lista de tareas después de actualizar una tarea
+  //     this.tareaSeleccionada = null; // Reiniciar la tarea seleccionada
+  //   });
+
+  // }
   actualizarTarea(tarea: Tareas) {
-    this.tareasService.actualizarTarea(tarea).then(() => {
-      this.obtenerTareas(); // Actualizar la lista de tareas después de actualizar una tarea
-      this.tareaSeleccionada = null; // Reiniciar la tarea seleccionada
-    });
+    return this.tareasService
+      .actualizarTarea(tarea)
+      .then(() => {
+        console.log('Tarea actualizada en Firebase con éxito');
+        this.obtenerTareas(); // Asegúrate de que esto funcione correctamente
+      })
+      .catch((error) => {
+        console.error('Error al actualizar la tarea en Firebase:', error);
+      });
   }
 
   // buscarCategoria() {
