@@ -30,9 +30,11 @@ export class TablaTareasComponent implements OnInit {
   }
   cambiarestadotarea(posicion: number) {
     this.tareas[posicion].realizada = !this.tareas[posicion].realizada;
+    this.actualizarTarea(this.tareas[posicion]);
   }
   cambiarestadotareaProgreso(posicion: number) {
     this.tareas[posicion].en_progreso = !this.tareas[posicion].en_progreso;
+    this.actualizarTarea(this.tareas[posicion]);
   }
   editarTarea(tarea: Tareas) {
     this.tareaSeleccionada = { ...tarea };
