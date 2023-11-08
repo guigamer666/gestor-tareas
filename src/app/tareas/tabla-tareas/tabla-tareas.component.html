@@ -17,7 +17,8 @@
         <td>{{ tarea.descripcion }}</td>
         <td>{{ tarea.realizada ? 'Sí' : 'No' }}</td>
         <td>{{ tarea.categoria }}</td>
-        <td>{{ tarea.fecha.toLocaleString() }}</td>
+        <td>{{ tarea.fecha | date:'dd-MM-yyyy' }}</td>
+
         <td>
           <div class="d-flex flex-column">
             <button type="button" class="btn btn-danger mb-2" (click)="eliminarTarea(tarea)">

@@ -17,7 +17,6 @@ export class ListaTareasComponent {
   mostrarBusquedaPorFecha: boolean = false;
   categoriaBuscada: string = '';
 
-  id = '';
   descripcion: string = '';
   realizada: boolean = false;
   en_progreso: boolean = false;
@@ -96,16 +95,17 @@ export class ListaTareasComponent {
         realizada: this.realizada,
         en_progreso: this.en_progreso,
         categoria: this.categoria,
-        fecha: this.fecha,
+        fecha: new Date(this.fecha),
         userUID: this.userService.getCurrentUserUID() || '',
       };
+      console.log(nuevatarea);
       this.Tarea.push(nuevatarea); //esto es lo que realmente agrega la tarea  junto lo lo de arriba la constante nuevatarea
       //reseteamos los campos
       this.descripcion = '';
       this.realizada = false;
       this.en_progreso = false;
       this.categoria = '';
-      this.fecha = new Date();
+      this.fecha = new Date(this.fecha);
       this.userService.getCurrentUserUID();
       //Le pasa al servicio addTarea lo que el usuario a ingresado y lo pone en base de datos
       this.tareasService.addTarea(nuevatarea).then(() => {

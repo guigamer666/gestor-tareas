@@ -32,7 +32,7 @@ export class TareasService {
     // y filtra las tareas por el 'userUID' proporcionado.
     const tareasQuery = query(
       tareas,
-      orderBy('fecha', 'desc'),
+      orderBy('fecha'),
       where('userUID', '==', userUID)
     );
 
@@ -50,7 +50,7 @@ export class TareasService {
           realizada: item['realizada'] as boolean,
           en_progreso: item['en_progreso'] as boolean,
           categoria: item['categoria'] as string,
-          fecha: new Date(),
+          fecha: item['fecha'].toDate(),
         }))
       )
     );
